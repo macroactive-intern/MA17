@@ -303,3 +303,41 @@ Step 15
                                                                                                     11 hrs
 
 ---------------------------------------------------------------------------------------------------------------- 
+
+AI Estimate
+
+Estimated total: 12 hrs
+
+This task is larger than a simple CRUD API because the endpoint needs coach-scoped access, filtering, searching, safe sorting, pagination metadata, status updates, stats, seed data, and a wide feature test suite.
+
+The highest-risk areas are:
+
+Making sure every query is scoped to the authenticated coach.
+Ensuring pagination totals do not include another coach’s clients.
+Escaping % and _ in search so search=% does not accidentally match everything.
+Safely handling sort fields with a whitelist instead of passing request input directly into orderBy().
+Returning 403 for cross-coach access instead of accidentally returning another coach’s data.
+Debugging feature tests across filtering, sorting, stats, and authorization.
+AI Breakdown
+Step	Estimate
+Project setup	15 mins
+Documentation	110 mins
+Laravel/Sanctum/Pest setup	30 mins
+Feature tests	150 mins
+Database, models, relationships, indexes	60 mins
+Routes and controller setup	30 mins
+Auth and ownership protection	55 mins
+Roster list endpoint	70 mins
+Single client endpoint	25 mins
+Status update endpoint	35 mins
+Stats endpoint	35 mins
+Seeder	40 mins
+Run tests	20 mins
+Fix failing tests	75 mins
+Manual testing	50 mins
+BEFORE-AFTER.md	35 mins
+Total
+
+835 mins — about 13 hrs 55 mins with buffer
+
+A more realistic working estimate is 12 hrs. The safe quoted estimate is 13 hrs because filtering, sorting, pagination, and cross-coach isolation can take extra time to test and debug properly.
