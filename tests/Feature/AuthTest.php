@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Client;
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
 
@@ -32,15 +33,19 @@ it('returns 403 when client role accesses stats', function () {
 });
 
 it('returns 403 when client role accesses single client endpoint', function () {
+    $coach = User::factory()->create(['role' => 'coach']);
+    $client = Client::factory()->create(['coach_id' => $coach->id]);
     Sanctum::actingAs(User::factory()->create(['role' => 'client']));
 
-    $this->getJson('/api/clients/1')->assertForbidden();
+    $this->getJson("/api/clients/{$client->id}")->assertForbidden();
 });
 
 it('returns 403 when client role attempts status update', function () {
+    $coach = User::factory()->create(['role' => 'coach']);
+    $client = Client::factory()->create(['coach_id' => $coach->id]);
     Sanctum::actingAs(User::factory()->create(['role' => 'client']));
 
-    $this->patchJson('/api/clients/1/status', ['status' => 'active'])->assertForbidden();
+    $this->patchJson("/api/clients/{$client->id}/status", ['status' => 'active'])->assertForbidden();
 });
 
 it('allows coach to access client list', function () {
