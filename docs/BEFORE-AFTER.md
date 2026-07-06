@@ -846,3 +846,74 @@ Failed asserting that 404 is identical to 401.
 
   Tests:    44 failed, 2 passed (6 assertions)
   Duration: 1.03s
+
+  --------------------------------------------------------------------------------------------------------------
+
+  After
+
+  ------------------------------------------------------------------------------------------------------------------
+
+   PASS  Tests\Unit\ExampleTest
+  ✓ that true is true
+
+   PASS  Tests\Feature\AuthTest
+  ✓ it returns 401 when unauthenticated accessing client list                                                                         0.21s  
+  ✓ it returns 401 when unauthenticated accessing single client                                                                       0.01s  
+  ✓ it returns 401 when unauthenticated accessing stats                                                                               0.01s  
+  ✓ it returns 401 when unauthenticated updating client status                                                                        0.01s  
+  ✓ it returns 403 when client role accesses client list                                                                              0.04s  
+  ✓ it returns 403 when client role accesses stats                                                                                    0.01s  
+  ✓ it returns 403 when client role accesses single client endpoint                                                                   0.01s  
+  ✓ it returns 403 when client role attempts status update                                                                            0.01s  
+  ✓ it allows coach to access client list                                                                                             0.01s  
+
+   PASS  Tests\Feature\ExampleTest
+  ✓ the application returns a successful response                                                                                     0.03s  
+
+   PASS  Tests\Feature\IsolationTest
+  ✓ it coach A list total is 5 not 8 when coach B has 3 clients                                                                       0.02s  
+  ✓ it coach A viewing coach B client returns 403 not 404                                                                             0.01s  
+  ✓ it coach A cannot update coach B client status                                                                                    0.01s  
+  ✓ it coach A list does not include any of coach B clients                                                                           0.02s  
+
+   PASS  Tests\Feature\RosterListTest
+  ✓ it returns paginated own clients with no query parameters                                                                         0.02s  
+  ✓ it pagination total is scoped to authenticated coach                                                                              0.01s  
+  ✓ it search filters by client name                                                                                                  0.01s  
+  ✓ it search filters by client email                                                                                                 0.01s  
+  ✓ it search is case insensitive                                                                                                     0.01s  
+  ✓ it search does not return another coachs matching client                                                                          0.01s  
+  ✓ it search=% does not match all clients                                                                                            0.01s  
+  ✓ it filters by valid status active                                                                                                 0.01s  
+  ✓ it filters by valid status cancelled                                                                                              0.01s  
+  ✓ it ignores invalid status and returns all clients                                                                                 0.01s  
+  ✓ it paginates at 20 results per page                                                                                               0.02s  
+
+   PASS  Tests\Feature\SortTest
+  ✓ it sorts by name ascending                                                                                                        0.02s  
+  ✓ it sorts by name descending                                                                                                       0.01s  
+  ✓ it sorts by joined_at ascending                                                                                                   0.01s  
+  ✓ it sorts by joined_at descending                                                                                                  0.01s  
+  ✓ it sort=engagement sorts by last_activity_at descending                                                                           0.01s  
+  ✓ it sort=engagement forces desc even when direction=asc is passed                                                                  0.01s  
+  ✓ it invalid sort defaults to name ascending                                                                                        0.01s  
+  ✓ it invalid direction defaults to ascending                                                                                        0.01s  
+
+   PASS  Tests\Feature\StatsTest
+  ✓ it stats total counts only authenticated coach clients                                                                            0.02s  
+  ✓ it active count is correct                                                                                                        0.01s  
+  ✓ it cancelled count is correct                                                                                                     0.01s  
+  ✓ it past due count is correct                                                                                                      0.01s  
+  ✓ it newest joined date reflects only authenticated coach clients                                                                   0.01s  
+  ✓ it other coach clients do not affect stats counts                                                                                 0.01s  
+  ✓ it returns zero counts and null date when coach has no clients                                                                    0.01s  
+
+   PASS  Tests\Feature\StatusUpdateTest
+  ✓ it coach can update own client status                                                                                             0.02s  
+  ✓ it coach can update status to past_due                                                                                            0.01s  
+  ✓ it invalid status update returns 422 validation error                                                                             0.01s  
+  ✓ it missing status field returns 422 validation error                                                                              0.01s  
+  ✓ it cross-coach status update returns 403                                                                                          0.01s  
+
+  Tests:    46 passed (90 assertions)
+  Duration: 1.00s
