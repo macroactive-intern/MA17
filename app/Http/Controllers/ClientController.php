@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ClientController extends Controller
 {
@@ -38,6 +39,14 @@ class ClientController extends Controller
     {
         $this->ensureCoach($request);
         $this->ensureOwnsClient($request, $client);
+
+        $validated = $request->validate([
+            'status' => ['required', Rule::in(['active', 'cancelled', 'past_due'])],
+        ]);
+
+        $client->update(['status' => $validated['status']]);
+
+        return response()->json($client);
     }
 
     private function applySearch(Builder $query, Request $request): void
