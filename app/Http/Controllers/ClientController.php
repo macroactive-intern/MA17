@@ -25,6 +25,16 @@ class ClientController extends Controller
     public function stats(Request $request)
     {
         $this->ensureCoach($request);
+
+        $base = Client::query()->where('coach_id', $request->user()->id);
+
+        return response()->json([
+            'total'           => (clone $base)->count(),
+            'active'          => (clone $base)->where('status', 'active')->count(),
+            'cancelled'       => (clone $base)->where('status', 'cancelled')->count(),
+            'past_due'        => (clone $base)->where('status', 'past_due')->count(),
+            'newest_joined_at' => (clone $base)->max('joined_at'),
+        ]);
     }
 
     public function show(Request $request, Client $client)
